@@ -2,27 +2,27 @@ import axios from 'axios';
 
 const API_URL = 'https://jsonplaceholder.typicode.com';
 
-// Récupérer tous les utilisateurs
+// Récupérer tous les albums
 export const getPosts = () => {
   return axios.get(`${API_URL}/posts`);
 };
 
-// Récupérer un utilisateur par ID
+// Récupérer un album par ID
 export const getPostById = (id) => {
   return axios.get(`${API_URL}/posts/${id}`);
 };
 
-// Créer un nouvel utilisateur
+// Créer un nouvel album
 export const createPost = (album) => {
-  return axios.post(`${API_URL}/posts`, album);
+  return axios.post(`${API_URL}/posts`, post);
 };
 
-// Mettre à jour un utilisateur
+// Mettre à jour un album
 export const updatePost = (id, album) => {
-  return axios.put(`${API_URL}/posts/${id}`, album);
+  return axios.put(`${API_URL}/posts/${id}`, post);
 };
 
-// Supprimer un utilisateur
+// Supprimer un album
 export const deletePost = (id) => {
   return axios.delete(`${API_URL}/posts/${id}`);
 };

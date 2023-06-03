@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { getAlbums } from '../../../_services/album.service';
+import { createPhoto } from '../../../_services/photo.service';
 
 const ModalAddPhoto = () => {
 
@@ -11,37 +13,42 @@ const ModalAddPhoto = () => {
         thumbnailurl:''
     })
 
+
     useEffect(() => {
-        axios.get("https://jsonplaceholder.typicode.com/albums").then((res) => {
-        console.log(res);
-        setAlbums(res?.data);
-        console.log(res.albums);
-        });
+        fetchAlbums();
     }, []);
 
-//     const alb = albums.map((album) =>
-//     <option value={album.id} key={album.id}>
-//       {album.title}
-//     </option>
-//   );
+    const fetchAlbums = async () => {
+        try {
+        const response = await getAlbums();
+        setAlbums(response.data);
+        } catch (error) {
+        console.error('Erreur lors de la récupération des photos:', error);
+        }
+    }
+
+    const alb = albums.map((album) =>
+    <option value={album.id} key={album.id}>
+      {album.title}
+    </option>
+  );
 
   const handleChange=(e)=>{
+    e.preventDefault();
      setDataForm(...dataForm,{
         [e.target.name]:e.target.value
      })
   }
 
-  const submitForm = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    axios
-      .post(`https://jsonplaceholder.typicode.com/albums`, { dataForm })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-      });
-
-      setDataForm('')
+    try {
+      await createPhoto(dataForm);
+      // Réinitialiser le formulaire et récupérer à nouveau les photos
+      setDataForm({});
+    } catch (error) {
+      console.error('Erreur lors de la création de l\'photo:', error);
+    }
   };
 
 
@@ -60,19 +67,12 @@ const ModalAddPhoto = () => {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={submitForm}>
+                            <form onSubmit={handleSubmit}>
                                 <div className="mb-3">
                                     <label htmlFor="exampleInputEmail1" className="form-label">Album Id</label>
                                     <select name="albumId" value={dataForm.albumId}  className="form-control" onChange={handleChange}>
                                         <option defaultValue>Select </option>
-                                        {albums.map((album) =>{
-                                            return (
-                                                <option value={album.id} key={album.id}>
-                                                    {album.title}
-                                                </option>
-                                            )
-                                        }
-                                        )}
+                                        {alb}
                                     </select>
                                 </div>
                                 <div className="mb-3">

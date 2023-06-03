@@ -1,56 +1,28 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// const BASE_URL="https://jsonplaceholder.typicode.com/"
+const API_URL = 'https://jsonplaceholder.typicode.com';
 
+// Récupérer tous les photos
+export const getPhoto = () => {
+  return axios.get(`${API_URL}/photos`);
+};
 
-// /*   
-// Récupération de la liste des user
-// @returns {Promise} 
-//   */
-// let getAllPhotos = () => {
-//     return axios.get(`${BASE_URL}photos`);
-// }
+// Récupérer un photo par ID
+export const getPhototById = (id) => {
+  return axios.get(`${API_URL}/photos/${id}`);
+};
 
+// Créer une nouvelle photo
+export const createPhoto = (photo) => {
+  return axios.post(`${API_URL}/photos`, photo);
+};
 
-// /**
-//  * Récupération d'un user
-//  * @param {number} id, but give here 1 for exemble 
-//  * @returns {Promise}
-//  */
-// let getPhoto = () => {
-//     return axios.get(`${BASE_URL}photos/1`)
-// }
+// Mettre à jour un photo
+export const updatePhoto = (id, photo) => {
+  return axios.put(`${API_URL}/photos/${id}`, photo);
+};
 
-
-// /**
-//  * Ajout d'un user
-//  * @param {object} photo 
-//  * @returns {Promise}
-//  */
-// let addPhoto = (photo) => {
-//     return axios.put(`${BASE_URL}photos`, photo)
-// }
-
-// /**
-//  * Mise à jour d'un user
-//  * @param {object} user 
-//  * @returns {Promise}
-//  */
-// let updatePhoto = (photo) => {
-//     return axios.patch(`${BASE_URL}/photos/5`, photo)
-// }
-
-// /**
-//  * Suppression d'un user
-//  * @param {number} id 
-//  * @returns {Promise}
-//  */
-// let deletePhoto = (id) => {
-//     return axios.delete(`${BASE_URL}/photo/`+id)
-// }
-
-
-
-// export const photoService = {
-//     getAllPhotos, getPhoto, addPhoto, updatePhoto, deletePhoto
-// }
+// Supprimer un photo
+export const deletePhoto = (id) => {
+  return axios.delete(`${API_URL}/photos/${id}`);
+};
