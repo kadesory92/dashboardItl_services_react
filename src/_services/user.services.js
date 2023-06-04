@@ -1,10 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://jsonplaceholder.typicode.com';
+const API_URL = "https://jsonplaceholder.typicode.com";
 
 // Récupérer tous les utilisateurs
 export const getUsers = () => {
   return axios.get(`${API_URL}/users`);
+};
+
+export const getListUsers = (page) => {
+  return axios.get(`${API_URL}/users?_page=${page}&_limit=8`);
 };
 
 // Récupérer un utilisateur par ID

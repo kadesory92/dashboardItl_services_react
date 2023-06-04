@@ -29,7 +29,7 @@ const AdminRouter = () => {
             <Route path="add" element={<AddU />} />
           </Route>
           <Route path="posts">
-            <Route path="index" element={<Posts />} />
+            <Route index element={<Posts />} />
             <Route path="edit/:pid" element={<EditPost />} />
             <Route path="add" element={<AddPost />} />
           </Route>

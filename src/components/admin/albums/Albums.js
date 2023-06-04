@@ -1,21 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { deleteAlbum, getAlbums } from "../../../_services/album.service";
+import { deleteAlbum, getListAlbums } from "../../../_services/album.service";
 import { Link } from "react-router-dom";
 
 const Albums = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    fetchAlbums();
-  }, []);
+    fetchAlbums(currentPage);
+  }, [currentPage]);
 
-  const fetchAlbums = async () => {
+  const fetchAlbums = async (page) => {
     try {
-      const res = await getAlbums();
+      const res = await getListAlbums(page);
       setAlbums(res.data);
+      const totalCount = res.headers["x-total-count"];
+      setTotalPages(Math.ceil(totalCount / 10));
     } catch (error) {
       console.error("Erreur lors de la récupération des photos", error);
     }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  console.log("AVANT : " + albums.length);
+  const deleteCurrentAlbum = (id) => {
+    console.log(id);
+    // deleteAlbum(id);
+    // fetchAlbums(currentPage);
+    const albumsFilter = albums.filter((album) => album.id != id);
+    setAlbums(albumsFilter);
+    console.log("APRES : " + albumsFilter.length);
   };
 
   return (
@@ -46,9 +64,11 @@ const Albums = () => {
                           </Link>
                         </td>
                         <td>
-                          <span onClick={() => deleteAlbum(album.id)}>
+                          <button
+                            onClick={() => deleteCurrentAlbum(album.id)}
+                            className="border-0">
                             <i className="fa-regular fa-trash-can my-3"></i>
-                          </span>
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -57,6 +77,23 @@ const Albums = () => {
             </div>
           </div>
         </div>
+
+        <nav className="mt-3 mx-4">
+          <ul className="pagination">
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+              (page) => (
+                <li
+                  key={page}
+                  className={`page-item ${
+                    page === currentPage ? "active" : ""
+                  }`}
+                  onClick={() => handlePageChange(page)}>
+                  <button className="page-link">{page}</button>
+                </li>
+              )
+            )}
+          </ul>
+        </nav>
       </div>
     </div>
   );

@@ -1,9 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://jsonplaceholder.typicode.com';
+const API_URL = "https://jsonplaceholder.typicode.com";
 
 // Récupérer tous les photos
-export const getPhoto = () => {
+export const getListPhotos = (page) => {
+  return axios.get(`${API_URL}/photos?_page=${page}&_limit=8`);
+};
+
+export const getPhotos = () => {
   return axios.get(`${API_URL}/photos`);
 };
 

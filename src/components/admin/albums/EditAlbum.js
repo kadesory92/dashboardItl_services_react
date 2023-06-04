@@ -3,8 +3,11 @@ import { getAlbumById, updateAlbum } from "../../../_services/album.service";
 import { useParams } from "react-router-dom";
 
 const EditAlbum = () => {
-  let album_id = useParams();
+  const { aid } = useParams();
 
+  console.log("album_id : " + aid);
+
+  console.log(aid);
   const [album, setAlbum] = useState({
     userId: "",
     title: "",
@@ -16,22 +19,26 @@ const EditAlbum = () => {
 
   const fetchAlbum = async () => {
     try {
-      const res = await getAlbumById(album_id);
+      const res = await getAlbumById(aid);
       console.log(res.data);
       setAlbum(res.data);
     } catch (error) {
       console.error("Erreur de chargement de l'album", error);
     }
   };
-
+  //
   const handleInputChange = (e) => {
-    setAlbum({ ...album, [e.target.name]: e.target.value });
+    const dataAlbum = {
+      ...album,
+      [e.target.name]: e.target.value,
+    };
+    setAlbum(dataAlbum);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateAlbum(album_id, album);
+      await updateAlbum(aid, album);
       // Réinitialiser le formulaire et récupérer à nouveau les album
       setAlbum({
         userId: "",
@@ -60,6 +67,7 @@ const EditAlbum = () => {
                       name="userId"
                       className="form-control"
                       value={album.userId}
+                      disabled
                       onChange={handleInputChange}
                     />
                   </div>
@@ -75,7 +83,7 @@ const EditAlbum = () => {
                   </div>
                   <div className="form-group md-3 mt-2">
                     <button type="submit" className="btn btn-primary w-100">
-                      Edit Album
+                      Update Album
                     </button>
                   </div>
                 </form>

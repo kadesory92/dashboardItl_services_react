@@ -1,10 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'https://jsonplaceholder.typicode.com';
+const API_URL = "https://jsonplaceholder.typicode.com";
 
 // Récupérer tous les albums
 export const getAlbums = () => {
   return axios.get(`${API_URL}/albums`);
+};
+
+export const getListAlbums = (page) => {
+  return axios.get(`${API_URL}/albums?_page=${page}&_limit=8`);
 };
 
 // Récupérer un album par ID
@@ -18,8 +22,8 @@ export const createAlbum = (album) => {
 };
 
 // Mettre à jour un album
-export const updateAlbum = (id, album) => {
-  return axios.put(`${API_URL}/albums/${id}`, album);
+export const updateAlbum = (aid, album) => {
+  return axios.put(`${API_URL}/albums/${aid}`, album);
 };
 
 // Supprimer un album

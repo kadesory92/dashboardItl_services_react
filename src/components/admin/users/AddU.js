@@ -26,7 +26,7 @@ const AddU = () => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-header">
-                <h3>Inscription</h3>
+                <h3>Add User</h3>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmit}>
