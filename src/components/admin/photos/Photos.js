@@ -8,10 +8,10 @@ const Photos = () => {
     const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
-        fetchPhotos(currentPage);
+        getPhotos(currentPage);
     }, [currentPage]);
 
-    const fetchPhotos = async (page) => {
+    const getPhotos = async (page) => {
     try {
       const response = await axios.get(`https://jsonplaceholder.typicode.com/albums?_page=${page}&_limit=8`);
       setPhotos(response.data);

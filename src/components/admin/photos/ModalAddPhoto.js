@@ -27,14 +27,13 @@ const ModalAddPhoto = () => {
         }
     }
 
-    const alb = albums.map((album) =>
+    const album = albums.map((album) =>
     <option value={album.id} key={album.id}>
       {album.title}
     </option>
   );
 
   const handleChange=(e)=>{
-    e.preventDefault();
      setDataForm(...dataForm,{
         [e.target.name]:e.target.value
      })
@@ -72,7 +71,7 @@ const ModalAddPhoto = () => {
                                     <label htmlFor="exampleInputEmail1" className="form-label">Album Id</label>
                                     <select name="albumId" value={dataForm.albumId}  className="form-control" onChange={handleChange}>
                                         <option defaultValue>Select </option>
-                                        {alb}
+                                        {album}
                                     </select>
                                 </div>
                                 <div className="mb-3">
